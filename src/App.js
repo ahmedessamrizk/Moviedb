@@ -67,6 +67,7 @@ function App() {
         <Route path='/' element = {<>
           {localStorage.getItem('tkn')? <Home /> : <Login decodeData = {decodeData}/>}
         </>} />
+        <Route path='Moviedb' element = { <Login decodeData = {decodeData} } />
         <Route path='home' element = { <ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path='login' element = {<Login decodeData = {decodeData}/>} />
 
