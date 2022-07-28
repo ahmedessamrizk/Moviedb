@@ -66,7 +66,7 @@ function App() {
     <Routes>
         <Route path='/' element = {<>
 
-          {localStorage.getItem('tkn')? <> <Navigate to="/home" /> </>: <Login decodeData = {decodeData}/>}
+          {localStorage.getItem('tkn')?  <Home /> : <Login decodeData = {decodeData}/>}
         </>} />
         {/* <Route path='Moviedb' element = { <Login decodeData = {decodeData} } /> */}
         <Route path='home' element = { <ProtectedRoute><Home /></ProtectedRoute>} />
@@ -85,7 +85,10 @@ function App() {
         <Route path='signup' element = {<Signup />} />
         <Route path='tvshow' element = {<ProtectedRoute> <TvShow /> </ProtectedRoute>} />
         <Route path='movies' element = {<ProtectedRoute> <Movies /> </ProtectedRoute>} />
-        <Route path='/Moviedb' element = {<Login decodeData = {decodeData}/>} />
+        <Route path='Moviedb' element = {<>
+
+{localStorage.getItem('tkn')?  <Home /> : <Login decodeData = {decodeData}/>}
+</>} />
         <Route path='*' element = {<div className='d-flex justify-content-center py-5 '>
             <p className='fs-1 fw-bold'> 404 </p>
         </div>} />
