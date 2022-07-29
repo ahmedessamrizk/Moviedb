@@ -8,5 +8,5 @@ nav
 }
 .logout
 {
-    cursor: pointer;
+    cursor: pointer !important;
 }

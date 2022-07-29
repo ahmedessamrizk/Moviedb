@@ -12,6 +12,7 @@ export default function Login({decodeData}) {
     });
     const [errList, setErrList] = useState([]);
     const [emailExist, setEmailExist] = useState('');
+    const [loginFlag, setLoginFlag] = useState(false)
 
     //Functions
     function getUser(e)
@@ -25,7 +26,6 @@ export default function Login({decodeData}) {
     async function submitForm(e)
     {
         e.preventDefault();
-        
         const schema = Joi.object({
             email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
             password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
@@ -39,12 +39,13 @@ export default function Login({decodeData}) {
         else
         {
             setErrList([]);
-
+            setLoginFlag(true);
             let {data} = await axios.post('https://route-egypt-api.herokuapp.com/signin' , user);
             //console.log(data.message);
             if(data.message != "success")
             {
                 setEmailExist(data.message);
+                // setLoginFlag(false);
             }
             else
             {
@@ -53,6 +54,7 @@ export default function Login({decodeData}) {
                 localStorage.setItem('tkn' , data.token);
                 decodeData();
                 navigate('/home');
+                // setLoginFlag(false);
             }
         }
     }
@@ -80,7 +82,17 @@ return <>
             <input onChange={ getUser } type="password" id='password' className='mt-3 form-control' placeholder='password'/>
             <p className='fs-6 text-danger mb-3'>{getError('password')}</p>
 
-            <button type='submit' className='my-2 btn btn-outline-info'>Log in</button>
+            
+            
+            <button type='submit' className='my-2 btn btn-outline-info'> {loginFlag? <>
+                <div class="spinner">
+                    <div class="rect1"></div>
+                    <div class="rect2"></div>
+                    <div class="rect3"></div>
+                    <div class="rect4"></div>
+                    <div class="rect5"></div>
+                </div> </>: <span>Log in</span>} </button>   
+                
             {
                 emailExist.length == 0? '': 
                 <p className='fs-6 text-danger'>

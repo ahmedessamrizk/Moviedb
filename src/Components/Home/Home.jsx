@@ -27,7 +27,7 @@ export default function Home() {
     
 
 return <>
-    {movieList.length == 0? <div className="spinner position-absolute top-0 end-0 start-0 bottom-0 d-flex align-items-center justify-content-center">
+    {movieList.length == 0? <div className="spinnn position-absolute top-0 end-0 start-0 bottom-0 d-flex align-items-center justify-content-center">
         <div className="spin">
             <div className="sk-cube-grid">
                 <div className="sk-cube bg-white sk-cube1"></div>
