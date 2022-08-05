@@ -1,30 +1,13 @@
-import React , {useEffect , useState} from 'react'
+import React , {useContext, useEffect , useState} from 'react'
 import axios from 'axios'
 import './Home.css'
 import { Link } from 'react-router-dom';
+import { APIContext } from './../../Context/APIContext';
+import { Alert, Button } from 'bootstrap';
 
 export default function Home() {
-    //Data
-    const [movieList, setMovieList] = useState([]);
-    const [tvList, setTvList] = useState([]);
-
-    //Hocks
-    useEffect( () => { 
-        // callApi
-        async function getMovies()
-        {
-            let { data } = await axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=dedb89745106639a2d878fb0c3f3dc20`)
-            setMovieList(data.results);
-        }
-        async function getTvShows()
-        {
-            let { data } = await axios.get(`https://api.themoviedb.org/3/trending/tv/day?api_key=dedb89745106639a2d878fb0c3f3dc20`)
-            setTvList(data.results);
-        }
-        getTvShows();
-        getMovies();
-    } , []);
     
+    let {movieList , tvList} = useContext(APIContext);
 
 return <>
     {movieList.length == 0? <div className="spinnn position-absolute top-0 end-0 start-0 bottom-0 d-flex align-items-center justify-content-center">
@@ -112,7 +95,9 @@ return <>
             </div>
         </div>
     </div>
-    </>}
+    
+    </>
+    }
     
     
 </>

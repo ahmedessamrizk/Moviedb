@@ -126,3 +126,12 @@ input
   transform: scale3D(0, 0, 1);
   } 
 }
+.page-item:hover
+{
+  background-color: #fff;
+  transition: all 0.4s;
+}
+.page-item:hover .page-link
+{
+  color: black !important;
+}

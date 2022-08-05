@@ -13,6 +13,7 @@ import jwtDecode from 'jwt-decode';
 import { useState, useEffect } from 'react';
 import SearchMovies from './Components/SearchedMovies/SearchMovies';
 import TVShowDetails from './Components/TVShowDetails/TVShowDetails';
+import { APIContextProvider } from './Context/APIContext';
 function App() {
 
   function ProtectedRoute(props)
@@ -63,36 +64,38 @@ function App() {
 
   return <>
     <Navbar currentUser = {currentUser} clrUserData = {clrUserData} searchMovie = {searchMovie}/>
-    <Routes>
-        <Route path='/' element = {<>
+    <APIContextProvider>
+      <Routes>
+          <Route path='/' element = {<>
 
-          {localStorage.getItem('tkn')?  <Home /> : <Login decodeData = {decodeData}/>}
-        </>} />
-        {/* <Route path='Moviedb' element = { <Login decodeData = {decodeData} } /> */}
-        <Route path='home' element = { <ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route path='login' element = {<Login decodeData = {decodeData}/>} />
+            {localStorage.getItem('tkn')?  <Home /> : <Login decodeData = {decodeData}/>}
+          </>} />
+          {/* <Route path='Moviedb' element = { <Login decodeData = {decodeData} } /> */}
+          <Route path='home' element = { <ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path='login' element = {<Login decodeData = {decodeData}/>} />
 
-        <Route path='moviedetails' element = {<ProtectedRoute> <MovieDetails /> </ProtectedRoute>} >
-          <Route path=':id' element = {<ProtectedRoute><MovieDetails /></ProtectedRoute>} />
-        </Route>
+          <Route path='moviedetails' element = {<ProtectedRoute> <MovieDetails /> </ProtectedRoute>} >
+            <Route path=':id' element = {<ProtectedRoute><MovieDetails /></ProtectedRoute>} />
+          </Route>
 
-        <Route path='tvshowdetails' element = {<ProtectedRoute> <TVShowDetails /> </ProtectedRoute>} >
-          <Route path=':id' element = {<ProtectedRoute><TVShowDetails /></ProtectedRoute>} />
-        </Route>
-        
+          <Route path='tvshowdetails' element = {<ProtectedRoute> <TVShowDetails /> </ProtectedRoute>} >
+            <Route path=':id' element = {<ProtectedRoute><TVShowDetails /></ProtectedRoute>} />
+          </Route>
+          
 
-        <Route path='searchmovies' element = {<SearchMovies searchedMovies = {searchedMovies}/>} />
-        <Route path='signup' element = {<Signup />} />
-        <Route path='tvshow' element = {<ProtectedRoute> <TvShow /> </ProtectedRoute>} />
-        <Route path='movies' element = {<ProtectedRoute> <Movies /> </ProtectedRoute>} />
-        <Route path='Moviedb' element = {<>
+          <Route path='searchmovies' element = {<SearchMovies searchedMovies = {searchedMovies}/>} />
+          <Route path='signup' element = {<Signup />} />
+          <Route path='tvshow' element = {<ProtectedRoute> <TvShow /> </ProtectedRoute>} />
+          <Route path='movies' element = {<ProtectedRoute> <Movies /> </ProtectedRoute>} />
+          <Route path='Moviedb' element = {<>
 
-{localStorage.getItem('tkn')?  <Home /> : <Login decodeData = {decodeData}/>}
-</>} />
-        <Route path='*' element = {<div className='d-flex justify-content-center py-5 '>
-            <p className='fs-1 fw-bold'> 404 </p>
-        </div>} />
-    </Routes>
+  {localStorage.getItem('tkn')?  <Home /> : <Login decodeData = {decodeData}/>}
+  </>} />
+          <Route path='*' element = {<div className='d-flex justify-content-center py-5 '>
+              <p className='fs-1 fw-bold'> 404 </p>
+          </div>} />
+      </Routes>
+    </APIContextProvider>
   </>
 }
 

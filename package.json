@@ -1,6 +1,5 @@
 {
   "name": "moviedb",
-  "homepage":"https://ahmedessamrizk.github.io/Moviedb",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

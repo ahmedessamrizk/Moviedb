@@ -12,7 +12,7 @@ export default function Login({decodeData}) {
     });
     const [errList, setErrList] = useState([]);
     const [emailExist, setEmailExist] = useState('');
-    const [loginFlag, setLoginFlag] = useState(false)
+    const [loginFlag, setLoginFlag] = useState(false);
 
     //Functions
     function getUser(e)
@@ -45,7 +45,7 @@ export default function Login({decodeData}) {
             if(data.message != "success")
             {
                 setEmailExist(data.message);
-                // setLoginFlag(false);
+                setLoginFlag(false);
             }
             else
             {
@@ -54,7 +54,7 @@ export default function Login({decodeData}) {
                 localStorage.setItem('tkn' , data.token);
                 decodeData();
                 navigate('/home');
-                // setLoginFlag(false);
+                setLoginFlag(false);
             }
         }
     }

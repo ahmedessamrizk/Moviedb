@@ -7,7 +7,7 @@ export default function MovieDetails() {
     //Data
     let { id } = useParams();
     //console.log(useParams());
-    const [movie, setMovie] = useState({});
+    const [movie, setMovie] = useState(null);
 
     //Hocks
     useEffect( () => {    

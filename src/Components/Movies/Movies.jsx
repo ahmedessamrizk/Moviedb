@@ -2,22 +2,32 @@ import React , {useState , useEffect} from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import MovieDetails from '../MovieDetails/MovieDetails';
+import { useContext } from 'react';
+import { APIContext } from './../../Context/APIContext';
+
 
 export default function Movies() {
-    //Data
-    const [movieList, setMovieList] = useState([]);
-
-    useEffect( () => { 
-        // callApi
-        async function getMovies()
-        {
-            let { data } = await axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=dedb89745106639a2d878fb0c3f3dc20`)
-            setMovieList(data.results);
-        }
-        getMovies();
-    } , []);
+    const [OldData, setOldData] = useState(null);
+    let {movieList , setPageNum , getMovies , pageNum , setMovieList} = useContext(APIContext);
+    const [pages, setPages] = useState([Number(pageNum) - 1 , pageNum , Number(pageNum) + 1]);
+    //console.log(pages);
+    function setPage(e)
+    {
+        setMovieList(null);
+        setPageNum(e.target.innerHTML);
+        getMovies(pageNum + 1);
+    }
+    function nextPageButton(op)
+    {
+        setMovieList(null);
+        let chosenPage = document.getElementById(op).innerHTML;
+        setPageNum(chosenPage);
+        getMovies(pageNum + 1);
+        setPages([chosenPage - 1 , chosenPage , chosenPage + 1]);
+    }
 return <>
-    <div className="movies mt-5">
+    { movieList?<>
+        <div className="movies mt-5">
             <div className="container">
                 <div className="row">
                     {
@@ -44,5 +54,43 @@ return <>
                 </div>
             </div>
     </div>
+    <ul class="pagination d-flex justify-content-center">
+            {pageNum != 1?<>
+                <li class="page-item" onClick={()=>nextPageButton("prev")}>
+            <a class="page-link text-dark" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+            </li>
+            <li onClick={setPage} class="page-item" id='first'><a class="page-link text-dark" href="#" id = 'prev'>{pages[0]}</a></li>
+            </> : ''}
+            <li class="page-item"><a class="page-link text-danger" href="#">{pages[1]}</a></li>
+            {/* {console.log(pageNum)} */}
+            <li class="page-item" onClick={setPage}><a class="page-link text-dark" href="#"  id='next'>{pages[2]}</a></li>
+            <li class="page-item">
+            <a class="page-link text-dark" href="#" aria-label="Next" onClick={()=>nextPageButton("next")}>
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+            </li>
+        </ul>
+    </>  :<> <div className="spinnn position-absolute top-0 end-0 start-0 bottom-0 d-flex align-items-center justify-content-center">
+        <div className="spin">
+                <div className="sk-cube-grid">
+                    <div className="sk-cube bg-white sk-cube1"></div>
+                    <div className="sk-cube bg-white sk-cube2"></div>
+                    <div className="sk-cube bg-white sk-cube3"></div>
+                    <div className="sk-cube bg-white sk-cube4"></div>
+                    <div className="sk-cube bg-white sk-cube5"></div>
+                    <div className="sk-cube bg-white sk-cube6"></div>
+                    <div className="sk-cube bg-white sk-cube7"></div>
+                    <div className="sk-cube bg-white sk-cube8"></div>
+                    <div className="sk-cube bg-white sk-cube9"></div>
+                </div>
+            </div>
+    </div>
+    </>
+    }
+    
+    
+    
 </>
 }

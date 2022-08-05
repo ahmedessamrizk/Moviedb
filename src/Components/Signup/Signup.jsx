@@ -15,6 +15,7 @@ let navigate = useNavigate();
     });
     const [errList, setErrList] = useState([]);
     const [emailExist, setEmailExist] = useState('');
+    const [regFlag, setRegFlag] = useState(false);
 
     //Functions
     function getUser(e)
@@ -45,16 +46,18 @@ let navigate = useNavigate();
         else
         {
             setErrList([]);
-
+            setRegFlag(true);
             let {data} = await axios.post('https://route-egypt-api.herokuapp.com/signup' , user);
             if(data.errors)
             {
                 setEmailExist(data.message);
+                setRegFlag(false);
             }
             else
             {
                 setEmailExist('');
                 navigate('/login');
+                setRegFlag(false);
             }
         }
     }
@@ -93,7 +96,14 @@ return <>
             <input onChange={ getUser } type="text" id='password' className='mt-3 form-control' placeholder='password'/>
             <p className=' fs-6 text-danger mb-3'> {getError('password')}</p>
 
-            <button type='submit' className='my-2 btn btn-outline-info'>Register</button>
+            <button type='submit' className='my-2 btn btn-outline-info'> {regFlag? <>
+                <div class="spinner">
+                    <div class="rect1"></div>
+                    <div class="rect2"></div>
+                    <div class="rect3"></div>
+                    <div class="rect4"></div>
+                    <div class="rect5"></div>
+                </div> </>: <span>Register</span>} </button> 
             {
                 emailExist.length == 0? '': 
                 <p className='fs-6 text-danger'>
