@@ -56,7 +56,7 @@ return <>
                 {
                     currentUser? <li className="nav-item userControl">
                         
-                        <span className="nav-link  d-inline user">{currentUser.first_name + " " + currentUser.last_name}</span>
+                        <span className="nav-link  d-inline user">{currentUser?.user.first_name + " " + currentUser?.user.last_name}</span>
                         <span onClick={clrUserData} className="nav-link d-inline logout user">Logut</span>
                     </li> : <>
                                 <li className="nav-item">
@@ -67,8 +67,6 @@ return <>
                                 </li>
                             </>
                 }
-                
-                
             </ul>
             </div>
         </div>
